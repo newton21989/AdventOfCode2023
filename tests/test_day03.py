@@ -2,7 +2,7 @@ import day03
 
 test_data = """467..114..
 ...*......
-..35..633.
+..35...633
 ......#...
 617*......
 .....+.58.
@@ -11,3 +11,5 @@ test_data = """467..114..
 ...$.*....
 .664.598.."""
 
+def test_part_1_test_data():
+  assert day03.findPartNumber(test_data.splitlines(0)) == 4361
