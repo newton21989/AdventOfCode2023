@@ -47,7 +47,7 @@ def getTotal(lines):
     matchLast = re.findall(r".*(\d|one|two|three|four|five|six|seven|eight|nine).{0,}$", line, re.MULTILINE)
 
     strData = "0"
-    if matchFirst is not None:
+    if matchFirst.__len__() > 0:
       matchFirst = matchFirst[0]
       matchLast = matchLast[0]
 
