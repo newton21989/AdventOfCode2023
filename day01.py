@@ -13,47 +13,45 @@ else:
     f.close()
 
 def numStrReplace(numberString):
-  matches = re.findall(r"(one|two|three|four|five|six|seven|eight|nine)", numberString)
-  while matches.__len__() > 0:
-    match = matches.pop(0)
-    if match == "one":
+  try: 
+    int(numberString) != 0
+    return numberString
+  except ValueError as e:
+    if numberString == "one":
       num = "1"
-    elif match == "two":
+    elif numberString == "two":
       num = "2"
-    elif match == "three":
+    elif numberString == "three":
       num = "3"
-    elif match == "four":
+    elif numberString == "four":
       num = "4"
-    elif match == "five":
+    elif numberString == "five":
       num = "5"
-    elif match == "six":
+    elif numberString == "six":
       num = "6"
-    elif match == "seven":
+    elif numberString == "seven":
       num = "7"
-    elif match == "eight":
+    elif numberString == "eight":
       num = "8"
-    elif match == "nine":
+    elif numberString == "nine":
       num = "9"
+    else:
+      raise ValueError("Input could not be interpreted as number")
 
-    numberString = re.sub(match, num, numberString, 1)
-  
-  return numberString
-
-def getData(string):
-  match = re.findall(r"(\d)|(\d)", string)
-  firstDigit = match[0][0]
-  if(match.__len__() > 1):
-    secondDigit = match[match.__len__() - 1][0]
-  else:
-    secondDigit = match[0][0]
-
-  return f"{firstDigit}{secondDigit}"
+  return num
 
 def getTotal(lines):
   total = 0
   for line in lines:
-    line = numStrReplace(line)
-    strData = getData(line)
+    matchFirst = re.findall(r"(\d|one|two|three|four|five|six|seven|eight|nine)", line, re.MULTILINE)
+    matchLast = re.findall(r".*(\d|one|two|three|four|five|six|seven|eight|nine).{0,}$", line, re.MULTILINE)
+
+    strData = "0"
+    if matchFirst is not None:
+      matchFirst = matchFirst[0]
+      matchLast = matchLast[0]
+
+      strData = numStrReplace(matchFirst) + numStrReplace(matchLast)
 
     intNum = int(strData)
     total += intNum
