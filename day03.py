@@ -51,7 +51,7 @@ def findPartNumber(data):
           sw = "."
 
         try:
-          s = data[lineNum - 1][col]
+          s = data[lineNum + 1][col]
         except IndexError:
           s = "."
 
