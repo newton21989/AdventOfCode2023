@@ -82,19 +82,65 @@ def getNumberFromCoords(data, lineNum, col):
     else:
       break
 
-  return number
+  return int(number)
 
-
-def findGearRatios(data):
-  number1 = ""
-  number2 = ""
-  ratio = 0
-  total = 0
+def findGearNumbers(data):
+  numberses = []
 
   for lineNum, line in enumerate(data):
     for col, char in enumerate(line):
       if char == "*":
         adjacent = scanAdjacent(data, lineNum, col)
+
+        numbers = []
+        mapNum = []
+        mapBool = []
+        for i, j in enumerate(adjacent):
+          try:
+            mapNum.append(int(j))
+            mapBool.append(True)
+          except:
+            mapNum.append(-1)
+            mapBool.append(False)
+
+        if(mapBool[1]):
+          numbers.append(getNumberFromCoords(data, lineNum - 1, col))
+        else:
+          if(mapBool[0]):
+            numbers.append(getNumberFromCoords(data, lineNum - 1, col - 1))
+          elif(mapBool[2]):
+            numbers.append(getNumberFromCoords(data, lineNum - 1, col + 1))
+
+        if(mapBool[6]):
+          numbers.append(getNumberFromCoords(data, lineNum + 1, col))
+        else:
+          if(mapBool[5]):
+            numbers.append(getNumberFromCoords(data, lineNum + 1, col - 1))
+          elif(mapBool[7]):
+            numbers.append(getNumberFromCoords(data, lineNum + 1, col + 1))
+
+        if(mapBool[3]):
+          numbers.append(getNumberFromCoords(data, lineNum, col - 1))
+        if(mapBool[4]):
+          numbers.append(getNumberFromCoords(data, lineNum, col + 1))
+
+        if(numbers.__len__() > 1):
+          numberses.append(numbers)
+
+  return numberses
+
+def findGearRatios(data):
+  sum = 0
+  for gear in findGearNumbers(data):
+    product = 0
+    for i, number in enumerate(gear):
+      if(i == 0):
+        product = number
+      else:
+        product = product * number
+    sum += product
+
+  return sum
 
 def findPartNumber(data):
   number = ""
@@ -126,3 +172,4 @@ def findPartNumber(data):
   return total
 
 print(f"Part 1: {findPartNumber(lines)}")
+print(f"Part 2: {findGearRatios(lines)}")
