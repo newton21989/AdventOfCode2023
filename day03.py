@@ -108,7 +108,7 @@ def findGearNumbers(data):
         else:
           if(mapBool[0]):
             numbers.append(getNumberFromCoords(data, lineNum - 1, col - 1))
-          elif(mapBool[2]):
+          if(mapBool[2]):
             numbers.append(getNumberFromCoords(data, lineNum - 1, col + 1))
 
         if(mapBool[6]):
@@ -116,7 +116,7 @@ def findGearNumbers(data):
         else:
           if(mapBool[5]):
             numbers.append(getNumberFromCoords(data, lineNum + 1, col - 1))
-          elif(mapBool[7]):
+          if(mapBool[7]):
             numbers.append(getNumberFromCoords(data, lineNum + 1, col + 1))
 
         if(mapBool[3]):
@@ -131,7 +131,8 @@ def findGearNumbers(data):
 
 def findGearRatios(data):
   sum = 0
-  for gear in findGearNumbers(data):
+  gearNumbers = findGearNumbers(data)
+  for gear in gearNumbers:
     product = 0
     for i, number in enumerate(gear):
       if(i == 0):

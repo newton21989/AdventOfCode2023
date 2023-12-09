@@ -19,6 +19,15 @@ more_test_data = \
 ....%.....*.........
 ...........460..904."""
 
+more_test_data_2 = \
+"""...709............
+..*...............
+831..$............
+.....701..........
+.........*.....507
+......308.459.....
+.................."""
+
 def test_part_1_test_data():
   assert day03.findPartNumber(test_data.splitlines(0)) == 4361
 
@@ -33,6 +42,9 @@ def test_part_2_test_data():
 
 def test_part_2_more_test_data():
   assert day03.findGearRatios(more_test_data.splitlines(0)) == 829928
+
+def test_part_2_more_test_data_2():
+  assert day03.findGearRatios(more_test_data_2.splitlines(0)) == 730551
 
 def test_find_number_from_start():
   assert day03.getNumberFromCoords(test_data.splitlines(0), 0, 5) == 114
