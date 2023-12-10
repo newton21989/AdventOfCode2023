@@ -48,12 +48,7 @@ def getMap(data):
   m = []
   for line in lines:
     vals = line.split(' ')
-    destStart = int(vals[0])
-    srcStart = int(vals[1])
-    r = int(vals[2])
-
-    for i in range(0, r):
-      m.append([srcStart + i, destStart + i])
+    m.append([int(vals[0]), int(vals[1]), int(vals[2])])
 
   return m
 
@@ -82,16 +77,14 @@ def parseData(data):
       humToLoc = getMap(section)
 
 def unmap(source, map):
-  dest = -1
-  for x in map:
-    if x[0] == source:
-      dest = x[1]
-      break
+  for mapping in map:
+    if source >= mapping[1] and source < mapping[1] + mapping[2]:
+      dest = source - mapping[1] + mapping[0]
 
-  if dest == -1:
-    dest = source
-
-  return dest
+  try:
+    return dest
+  except UnboundLocalError:
+    return source
 
 def lookup(seed):
   global seedToSoil, soilToFert, fertToWater, waterToLight, lightToTemp, tempToHum, humToLoc

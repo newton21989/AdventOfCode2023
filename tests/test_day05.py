@@ -46,7 +46,7 @@ def test_get_seeds():
   assert day05.getSeeds(test_data.split("\n\n")[0]) == [79,14,55,13]
 
 def test_parse_map():
-  assert day05.getMap(test_data_short.split("\n\n")[1]) == [[55, 22], [56, 23], [90, 87], [91, 88], [92, 89], [93, 90]]
+  assert day05.getMap(test_data_short.split("\n\n")[1]) == [[22, 55, 2], [87, 90, 4]]
 
 def test_unmap():
   day05.parseData(test_data)
