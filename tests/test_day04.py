@@ -14,3 +14,8 @@ def test_card_1():
 def test_d4p1_test_data():
   assert day04.getTotal(test_data.splitlines(0)) == 13
   
+def test_count_matches():
+  assert day04.getMatches(test_data.splitlines(0)[0]) == 4
+
+def test_total_matches():
+  assert day04.getTotalMatches(test_data.splitlines(0)) == 30
