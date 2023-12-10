@@ -1,4 +1,6 @@
 import os
+from threading import Thread
+from time import sleep
 
 filename = './day05-input.txt'
 
@@ -29,6 +31,14 @@ def arrMin(array):
 
   return out
 
+def getSeedPairs(intSeeds):
+  out = []
+  while intSeeds.__len__() > 0:
+    startSeed = intSeeds.pop(0)
+    r = intSeeds.pop(0)
+    out.append([startSeed, r])
+
+  return out
 
 def getSeeds(data):
   seeds = data.split(' ')
@@ -106,6 +116,53 @@ def part1():
 
   return arrMin(locs)
 
+count = 0
+minLoc = 999999999
+searchSpace = 0
+
+def part2():
+  global count
+  global searchSpace
+  seedPairs = getSeedPairs(seeds)
+
+  for pair in seedPairs:
+    searchSpace += pair[1]
+
+  global minLoc
+  for pair in seedPairs:
+    for j in range(0, pair[1]):
+      count += 1
+      loc = lookup(pair[0] + j)
+      if loc < minLoc:
+        minLoc = loc
+
+  print(f"Part 2: {minLoc}")
+
+def progress():
+  global count
+  global searchSpace
+  global minLoc
+  spinner = ['|','/','-','\\']
+  spinState = 0
+  sleep(1)
+  while part2Thread.is_alive():
+    progress = round((count / searchSpace)*100, 2)
+    if spinState == 3:
+      spinState = 0
+    else:
+      spinState += 1
+    print(f"Progress: {progress}% - Current Answer: {minLoc} {spinner[spinState]}", end='\r')
+    sleep(0.1)
+
 parseData(read)
 
 print(f"Part 1: {part1()}")
+
+part2Thread = Thread(target=part2)
+part2Thread.start()
+
+progressThread = Thread(target = progress)
+progressThread.start()
+progressThread.join()
+
+part2Thread.join()
