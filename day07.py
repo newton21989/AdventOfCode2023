@@ -10,7 +10,18 @@ else:
     lines = read.splitlines(0)
     f.close()
 
+WILDCARD = "J"
+
 cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+if WILDCARD is not "":
+  newValues = []
+  newValues.append(WILDCARD)
+  for card in cardValues:
+    if card is not WILDCARD:
+      newValues.append(card)
+
+  cardValues = newValues
+
 HIGH_CARD = 0
 ONE_PAIR = 1
 TWO_PAIR = 2
@@ -25,8 +36,9 @@ def arrMax(arr):
       out = element
     else:
       out = max(out, element)
+    pos = i
 
-  return out
+  return out, pos
 
 def arrCount(arr, value):
   count = 0
@@ -44,25 +56,55 @@ def getHandType(hand):
         counts[i] += 1
 
   pairs = arrCount(counts, 2)
-  maxCount = arrMax(counts)
+  maxCount, card = arrMax(counts)
 
-  if maxCount == 1:
-    return HIGH_CARD
-  elif maxCount == 2 and pairs == 1:
-    return ONE_PAIR
-  elif maxCount == 2 and pairs == 2:
-    return TWO_PAIR
-  elif maxCount == 3 and pairs == 0:
-    return THREE_OF_A_KIND
-  elif maxCount == 3 and pairs == 1:
-    return FULL_HOUSE
-  elif maxCount == 4:
-    return FOUR_OF_A_KIND
-  elif maxCount == 5:
-    return FIVE_OF_A_KIND
+  if(WILDCARD is not ""):
+    wildCount = counts[0]
+
+  if wildCount == 0:
+    if maxCount == 1:
+      out = HIGH_CARD
+    elif maxCount == 2 and pairs == 1:
+      out = ONE_PAIR
+    elif maxCount == 2 and pairs == 2:
+      out = TWO_PAIR
+    elif maxCount == 3 and pairs == 0:
+      out = THREE_OF_A_KIND
+    elif maxCount == 3 and pairs == 1:
+      out = FULL_HOUSE
+    elif maxCount == 4:
+      out = FOUR_OF_A_KIND
+    elif maxCount == 5:
+      out = FIVE_OF_A_KIND
+    else:
+      raise ValueError("Unable to determine hand type")
+  elif wildCount > 0:
+    if maxCount == 1 and wildCount == 1:
+      out = ONE_PAIR
+    elif maxCount == 2 and wildCount == 1 and pairs == 1:
+      out = THREE_OF_A_KIND
+    elif maxCount == 2 and wildCount == 1 and pairs == 2:
+      out = FULL_HOUSE
+    elif maxCount == 2 and wildCount == 2 and pairs == 1:
+      out = THREE_OF_A_KIND
+    elif maxCount == 2 and wildCount == 2 and pairs == 2:
+      out = FOUR_OF_A_KIND
+    elif maxCount == 3 and wildCount == 1:
+      out = FOUR_OF_A_KIND
+    elif maxCount == 3 and wildCount == 2:
+      out = FIVE_OF_A_KIND
+    elif maxCount == 3 and wildCount == 3 and pairs == 0:
+      out = FOUR_OF_A_KIND
+    elif maxCount == 3 and wildCount == 3 and pairs == 1:
+      out = FIVE_OF_A_KIND
+    elif maxCount == 4 or wildCount == 4 or wildCount == 5:
+      out = FIVE_OF_A_KIND
+    else:
+      raise ValueError("Unable to determine hand type")
   else:
-    raise ValueError("Unable to determine hand type")
+    raise ValueError("Number of wildcards not >= 0")
 
+  return out
 
 def getCardValue(card):
   global cardValues
@@ -119,4 +161,5 @@ def part1(sortedHands):
   
   return total
 
-print(f"Part 1: {part1(sortHands(lines))}")
+print(f"Wildcard: {WILDCARD if WILDCARD is not '' else 'none'}")
+print(f"Answer: {part1(sortHands(lines))}")

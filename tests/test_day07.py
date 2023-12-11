@@ -14,6 +14,9 @@ def test_arr_max():
 def test_get_hand_type():
   assert day07.getHandType("3JKKQ") == 1
 
+def test_get_hand_type_wildcard():
+  assert day07.getHandType("KTJJT") == 5
+
 def test_get_card_value():
   assert day07.getCardValue("A") == 12
 
@@ -28,3 +31,6 @@ def test_sort_hands():
 
 def test_part_1_test_data():
   assert day07.part1(day07.sortHands(test_data.splitlines(0))) == 6440
+
+def test_part_2_test_data():
+  assert day07.part1(day07.sortHands(test_data.splitlines(0))) == 5905
