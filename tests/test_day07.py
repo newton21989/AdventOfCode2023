@@ -12,7 +12,7 @@ def test_arr_max():
   assert day07.arrMax([3,1,4,2]) == 4
 
 def test_get_hand_type():
-  assert day07.getHandType("32T3K") == 2
+  assert day07.getHandType("3JKKQ") == 1
 
 def test_get_card_value():
   assert day07.getCardValue("A") == 12

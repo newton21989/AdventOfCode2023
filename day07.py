@@ -11,6 +11,13 @@ else:
     f.close()
 
 cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+HIGH_CARD = 0
+ONE_PAIR = 1
+TWO_PAIR = 2
+THREE_OF_A_KIND = 3
+FULL_HOUSE = 4
+FOUR_OF_A_KIND = 5
+FIVE_OF_A_KIND = 6
 
 def arrMax(arr):
   for i, element in enumerate(arr):
@@ -21,6 +28,14 @@ def arrMax(arr):
 
   return out
 
+def arrCount(arr, value):
+  count = 0
+  for element in arr:
+    if element == value:
+      count += 1
+
+  return count
+
 def getHandType(hand):
   counts = [0,0,0,0,0,0,0,0,0,0,0,0,0]
   for card in hand:
@@ -28,7 +43,26 @@ def getHandType(hand):
       if card == check:
         counts[i] += 1
 
-  return arrMax(counts)
+  pairs = arrCount(counts, 2)
+  maxCount = arrMax(counts)
+
+  if maxCount == 1:
+    return HIGH_CARD
+  elif maxCount == 2 and pairs == 1:
+    return ONE_PAIR
+  elif maxCount == 2 and pairs == 2:
+    return TWO_PAIR
+  elif maxCount == 3 and pairs == 0:
+    return THREE_OF_A_KIND
+  elif maxCount == 3 and pairs == 1:
+    return FULL_HOUSE
+  elif maxCount == 4:
+    return FOUR_OF_A_KIND
+  elif maxCount == 5:
+    return FIVE_OF_A_KIND
+  else:
+    raise ValueError("Unable to determine hand type")
+
 
 def getCardValue(card):
   global cardValues
