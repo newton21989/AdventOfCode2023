@@ -1,4 +1,7 @@
 import os
+import numpy as np
+from threading import Thread
+from time import sleep
 
 filename = './day08-input.txt'
 
@@ -10,10 +13,13 @@ else:
     lines = read.splitlines(0)
     f.close()
 
-instructions = lines.pop(0)
-lines.pop(0)
+instructions = ""
+data = []
 
 def parseData(lines):
+  global instructions, data
+  instructions = lines.pop(0)
+  lines.pop(0)
   m = []
   for line in lines:
     firstSplit = line.split(' = (')
@@ -21,10 +27,20 @@ def parseData(lines):
 
     m.append([firstSplit[0], secondSplit[0], secondSplit[1][:3]])
 
-  return m
-  
-def traverse(map):
-  start = [x for x, el in enumerate(map) if "AAA" in el[0]][0]
+  data = m
+
+def traverseInTandem(map):
+  startingPoints = [x for x, el in enumerate(map) if el[0].endswith("A")]
+  hops = []
+  for start in startingPoints:
+    hops.append(np.int64(traverse(map, start)))
+
+  lcm = np.lcm.reduce(hops)
+  return lcm
+
+def traverse(map, start = -1):
+  if start == -1:
+    start = [x for x, el in enumerate(map) if "AAA" in el[0]][0]
 
   thisHop = start
   i = 0
@@ -42,11 +58,14 @@ def traverse(map):
     else:
       i += 1
 
-    if nextHop == "ZZZ":
+    if nextHop.endswith("Z"):
       break
 
-    thisHop = [x for x, el in enumerate(map) if nextHop in el[0]][0]
+    thisHopMk1 = [x for x, el in enumerate(map) if nextHop in el[0]]
+    thisHop = thisHopMk1[0]
 
   return hops
 
-print(f"Part 1: {traverse(parseData(lines))}")
+parseData(lines)
+print(f"Part 1: {traverse(data)}")
+print(f"Part 2: {traverseInTandem(data)}")
