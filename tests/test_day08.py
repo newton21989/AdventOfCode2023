@@ -21,9 +21,9 @@ XXX = (XXX, XXX)
 """
 
 def test_part_1_test_data():
-  day08.parseData(test_data)
-  assert day08.traverse() == 6
+  data = day08.parseData(test_data.splitlines(0))
+  assert day08.traverse(data) == 6
 
 def test_part_2_test_data():
-  day08.parseData(test_data)
-  assert day08.traverseInTandem() == 6
+  data = day08.parseData(test_data_2.splitlines(0))
+  assert day08.traverseInTandem(data) == 6

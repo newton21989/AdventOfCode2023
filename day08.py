@@ -14,7 +14,6 @@ else:
     f.close()
 
 instructions = ""
-data = []
 
 def parseData(lines):
   global instructions, data
@@ -27,7 +26,7 @@ def parseData(lines):
 
     m.append([firstSplit[0], secondSplit[0], secondSplit[1][:3]])
 
-  data = m
+  return m
 
 def traverseInTandem(map):
   startingPoints = [x for x, el in enumerate(map) if el[0].endswith("A")]
@@ -66,6 +65,6 @@ def traverse(map, start = -1):
 
   return hops
 
-parseData(lines)
+data = parseData(lines)
 print(f"Part 1: {traverse(data)}")
 print(f"Part 2: {traverseInTandem(data)}")
