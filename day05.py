@@ -2,16 +2,6 @@ import os
 from threading import Thread
 from time import sleep
 
-filename = './day05-input.txt'
-
-if not os.path.isfile(filename):
-  raise FileExistsError("Error: input file does not exist.")
-  exit
-else:
-  with open(filename, 'r') as f:
-    read = f.read().rstrip()
-    f.close()
-
 seeds = []
 seedToSoil= []
 soilToFert = []
@@ -154,15 +144,26 @@ def progress():
     print(f"Progress: {progress}% - Current Answer: {minLoc} {spinner[spinState]}", end='\r')
     sleep(0.1)
 
-parseData(read)
+if __name__ == "__main__":
+  filename = './day05-input.txt'
 
-print(f"Part 1: {part1()}")
+  if not os.path.isfile(filename):
+    raise FileExistsError("Error: input file does not exist.")
+  else:
+    with open(filename, 'r') as f:
+      read = f.read().rstrip()
+      f.close()
 
-part2Thread = Thread(target=part2)
-part2Thread.start()
 
-progressThread = Thread(target = progress)
-progressThread.start()
-progressThread.join()
+  parseData(read)
 
-part2Thread.join()
+  print(f"Part 1: {part1()}")
+
+  part2Thread = Thread(target=part2)
+  part2Thread.start()
+
+  progressThread = Thread(target = progress)
+  progressThread.start()
+  progressThread.join()
+
+  part2Thread.join()
