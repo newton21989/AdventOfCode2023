@@ -17,3 +17,9 @@ def test_extrapolate():
 
 def test_part_1_test_data():
   assert day09.part_1(test_data.splitlines(0)) == 114
+
+def test_reverse_tree_backwards():
+  assert day09.reverseTreeBackwards([[10,13,16,21,30,45],[3,3,5,9,15],[0,2,4,6],[2,2,2],[0,0]]) == [[5,10,13,16,21,30,45],[5,3,3,5,9,15],[-2,0,2,4,6],[2,2,2,2],[0,0]]
+
+def test_part_2_test_data():
+  assert day09.part_2(test_data.splitlines(0)) == 2

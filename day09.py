@@ -38,6 +38,18 @@ def reverseTree(tree):
 
   return tree
 
+def reverseTreeBackwards(tree):
+  for i in range(len(tree) - 2, -1, -1):
+    branch1 = tree[i]
+    branch2 = tree[i + 1]
+
+    num1 = branch1[0]
+    num2 = branch2[0]
+    branch1.insert(0, num1 - num2)
+    tree[i] = branch1
+
+  return tree
+
 def extrapolate(line):
   values = line.split(' ')
   tree = []
@@ -53,11 +65,34 @@ def extrapolate(line):
 
   return tree[0][len(tree[0]) - 1]
 
+def extrapolateBackwards(line):
+  values = line.split(' ')
+  tree = []
+
+  intVals = []
+  for v in values:
+    intVals.append(int(v))
+
+  tree.append(intVals)
+
+  fillTree(tree)
+  reverseTreeBackwards(tree)
+
+  return tree[0][0]
+
 def part_1(lines):
   total = 0
 
   for line in lines:
     total += extrapolate(line)
+
+  return total
+
+def part_2(lines):
+  total = 0
+
+  for line in lines:
+    total += extrapolateBackwards(line)
 
   return total
 
@@ -78,3 +113,4 @@ if __name__ == "__main__":
   parseData(read)
 
   print(f"Part 1: {part_1(lines)}")
+  print(f"Part 2: {part_2(lines)}")
