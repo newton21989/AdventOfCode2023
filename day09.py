@@ -1,7 +1,4 @@
 import os
-import numpy as np
-from threading import Thread
-from time import sleep
 
 lines = []
 
