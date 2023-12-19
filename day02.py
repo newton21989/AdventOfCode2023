@@ -1,17 +1,6 @@
 import os
 import re
 
-filename = './day02-input.txt'
-
-if not os.path.isfile(filename):
-  print("Error: input file does not exist.")
-  exit
-else:
-  with open(filename, 'r') as f:
-    read = f.read().rstrip()
-    lines = read.splitlines(0)
-    f.close()
-
 def getGameIsPossible(gameData):
   rounds = gameData.split(';')
   for round in rounds:
@@ -92,5 +81,17 @@ def getTotalPower(lines):
 
   return total
 
-print(f"Part 1: {getTotal(lines)}")
-print(f"Part 2: {getTotalPower(lines)}")
+if __name__ == "__main__":
+  filename = './day02-input.txt'
+
+  if not os.path.isfile(filename):
+    print("Error: input file does not exist.")
+    exit
+  else:
+    with open(filename, 'r') as f:
+      read = f.read().rstrip()
+      lines = read.splitlines(0)
+      f.close()
+
+  print(f"Part 1: {getTotal(lines)}")
+  print(f"Part 2: {getTotalPower(lines)}")
