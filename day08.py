@@ -3,16 +3,6 @@ import numpy as np
 from threading import Thread
 from time import sleep
 
-filename = './day08-input.txt'
-
-if not os.path.isfile(filename):
-  raise FileExistsError("Error: input file does not exist.")
-else:
-  with open(filename, 'r') as f:
-    read = f.read().rstrip()
-    lines = read.splitlines(0)
-    f.close()
-
 instructions = ""
 
 def parseData(lines):
@@ -65,6 +55,18 @@ def traverse(map, start = -1):
 
   return hops
 
-data = parseData(lines)
-print(f"Part 1: {traverse(data)}")
-print(f"Part 2: {traverseInTandem(data)}")
+if __name__ == "__main__":
+  filename = './day08-input.txt'
+
+  if not os.path.isfile(filename):
+    raise FileExistsError("Error: input file does not exist.")
+  else:
+    with open(filename, 'r') as f:
+      read = f.read().rstrip()
+      lines = read.splitlines(0)
+      f.close()
+
+
+  data = parseData(lines)
+  print(f"Part 1: {traverse(data)}")
+  print(f"Part 2: {traverseInTandem(data)}")
