@@ -1,17 +1,6 @@
 import os
 import re
 
-filename = './day01-input.txt'
-
-if not os.path.isfile(filename):
-  print("Error: input file does not exist.")
-  exit
-else:
-  with open(filename, 'r') as f:
-    read = f.read().rstrip()
-    lines = read.splitlines(0)
-    f.close()
-
 def numStrReplace(numberString):
   try: 
     int(numberString) != 0
@@ -58,4 +47,15 @@ def getTotal(lines):
 
   return total
 
-print(f"Total = {getTotal(lines)}")
+if __name__ == "__main__":
+  filename = './day01-input.txt'
+
+  if not os.path.isfile(filename):
+    print("Error: input file does not exist.")
+  else:
+    with open(filename, 'r') as f:
+      read = f.read().rstrip()
+      lines = read.splitlines(0)
+      f.close()
+
+  print(f"Total = {getTotal(lines)}")
