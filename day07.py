@@ -1,15 +1,5 @@
 import os
 
-filename = './day07-input.txt'
-
-if not os.path.isfile(filename):
-  raise FileExistsError("Error: input file does not exist.")
-else:
-  with open(filename, 'r') as f:
-    read = f.read().rstrip()
-    lines = read.splitlines(0)
-    f.close()
-
 WILDCARD = "J"
 
 cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
@@ -161,5 +151,16 @@ def part1(sortedHands):
   
   return total
 
-print(f"Wildcard: {WILDCARD if WILDCARD is not '' else 'none'}")
-print(f"Answer: {part1(sortHands(lines))}")
+if __name__ == "__main__":
+  filename = './day07-input.txt'
+
+  if not os.path.isfile(filename):
+    raise FileExistsError("Error: input file does not exist.")
+  else:
+    with open(filename, 'r') as f:
+      read = f.read().rstrip()
+      lines = read.splitlines(0)
+      f.close()
+
+  print(f"Wildcard: {WILDCARD if WILDCARD is not '' else 'none'}")
+  print(f"Answer: {part1(sortHands(lines))}")
