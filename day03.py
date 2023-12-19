@@ -1,16 +1,5 @@
 import os
 
-filename = './day03-input.txt'
-
-if not os.path.isfile(filename):
-  print("Error: input file does not exist.")
-  exit
-else:
-  with open(filename, 'r') as f:
-    read = f.read().rstrip()
-    lines = read.splitlines(0)
-    f.close()
-
 def scanAdjacent(data, lineNum, col):
   try:
     nw = data[lineNum - 1][col - 1]
@@ -172,5 +161,17 @@ def findPartNumber(data):
 
   return total
 
-print(f"Part 1: {findPartNumber(lines)}")
-print(f"Part 2: {findGearRatios(lines)}")
+if __name__ == "__main__":
+  filename = './day03-input.txt'
+
+  if not os.path.isfile(filename):
+    print("Error: input file does not exist.")
+    exit
+  else:
+    with open(filename, 'r') as f:
+      read = f.read().rstrip()
+      lines = read.splitlines(0)
+      f.close()
+
+  print(f"Part 1: {findPartNumber(lines)}")
+  print(f"Part 2: {findGearRatios(lines)}")
