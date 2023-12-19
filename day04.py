@@ -1,17 +1,6 @@
 import os
 import re
 
-filename = './day04-input.txt'
-
-if not os.path.isfile(filename):
-  raise FileExistsError("Error: input file does not exist.")
-  exit
-else:
-  with open(filename, 'r') as f:
-    read = f.read().rstrip()
-    lines = read.splitlines(0)
-    f.close()
-
 def arrSum(array):
   sum = 0
   for element in array:
@@ -67,5 +56,17 @@ def getTotalMatches(data):
   
   return total
 
-print(f"Part 1: {getTotal(lines)}")
-print(f"Part 2: {getTotalMatches(lines)}")
+if __name__ == "__main__":
+  filename = './day04-input.txt'
+
+  if not os.path.isfile(filename):
+    raise FileExistsError("Error: input file does not exist.")
+    exit
+  else:
+    with open(filename, 'r') as f:
+      read = f.read().rstrip()
+      lines = read.splitlines(0)
+      f.close()
+
+  print(f"Part 1: {getTotal(lines)}")
+  print(f"Part 2: {getTotalMatches(lines)}")
